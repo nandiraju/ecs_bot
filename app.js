@@ -10,23 +10,30 @@ const app = new App({
 
 // All the room in the world for your code
 
-app.message(async ({ message, say }) => {
-  
-  console.log("In message.....")
-  
-//    const reversedText = [...message.text].reverse().join("");
-//     await say(reversedText);
-  
-  // Filter out message events with subtypes (see https://api.slack.com/events/message)
-  if (message.subtype === undefined || message.subtype === 'bot_message') {
-    const reversedText = [...message.text].reverse().join("");
-    await say(reversedText);
-  }
+app.message(/^(define:).*/, async ({ context, say }) => {
+  // RegExp matches are inside of context.matches
+  const greeting = context.matches[0];
+  let asking = greeting.split(":")[1];
+  await say(`Here are some explanations ${asking}`);
 });
 
-app.message('knock knock', async ({ message, say }) => {
-  await say(`_Who's there?_`);
-});
+// app.message(async ({ message, say }) => {
+  
+//   console.log("In message.....")
+  
+// //    const reversedText = [...message.text].reverse().join("");
+// //     await say(reversedText);
+  
+//   // Filter out message events with subtypes (see https://api.slack.com/events/message)
+//   if (message.subtype === undefined || message.subtype === 'bot_message') {
+//     const reversedText = [...message.text].reverse().join("");
+//     await say(reversedText);
+//   }
+// });
+
+// app.message('knock knock', async ({ message, say }) => {
+//   await say(`_Who's there?_`);
+// });
 
 app.event('app_home_opened', async ({ event, client, context }) => {
   try {
