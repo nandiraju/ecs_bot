@@ -18,6 +18,9 @@ app.message(async ({ message, say }) => {
   }
 });
 
+app.message('knock knock', async ({ message, say }) => {
+  await say(`_Who's there?_`);
+});
 
 app.event('app_home_opened', async ({ event, client, context }) => {
   try {
