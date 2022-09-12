@@ -11,14 +11,17 @@ const app = new App({
 // All the room in the world for your code
 
 app.message(async ({ message, say }) => {
-   const reversedText = [...message.text].reverse().join("");
-    await say(reversedText);
+  
+  console.log("In message.....")
+  
+//    const reversedText = [...message.text].reverse().join("");
+//     await say(reversedText);
   
   // Filter out message events with subtypes (see https://api.slack.com/events/message)
-  // if (message.subtype === undefined || message.subtype === 'bot_message') {
-  //   const reversedText = [...message.text].reverse().join("");
-  //   await say(reversedText);
-  // }
+  if (message.subtype === undefined || message.subtype === 'bot_message') {
+    const reversedText = [...message.text].reverse().join("");
+    await say(reversedText);
+  }
 });
 
 // app.message('knock knock', async ({ message, say }) => {
@@ -103,38 +106,6 @@ app.command('/rian', async ({ ack, payload, context }) => {
   }
 });
 
-
-// Listen for a button invocation with action_id `button_abc`
-// You must set up a Request URL under Interactive Components on your app configuration page
-app.action('button_abc', async ({ ack, body, context }) => {
-  // Acknowledge the button request
-  ack();
-
-  try {
-    // Update the message
-    const result = await app.client.chat.update({
-      token: context.botToken,
-      // ts of message to update
-      ts: body.message.ts,
-      // Channel of message
-      channel: body.channel.id,
-      blocks: [
-        {
-          type: 'section',
-          text: {
-            type: 'mrkdwn',
-            text: '*The button was clicked!*'
-          }
-        }
-      ],
-      text: 'Message from Test App'
-    });
-    console.log(result);
-  }
-  catch (error) {
-    console.error(error);
-  }
-});
 
 (async () => {
   // Start your app
