@@ -10,8 +10,12 @@ const app = new App({
 
 // All the room in the world for your code
 
-app.message('knock knock', async ({ message, say }) => {
-  await say(`_Who's there?_`);
+app.message(async ({ message, say }) => {
+  // Filter out message events with subtypes (see https://api.slack.com/events/message)
+  if (message.subtype === undefined || message.subtype === 'bot_message') {
+    const reversedText = [...message.text].reverse().join("");
+    await say(reversedText);
+  }
 });
 
 
@@ -34,7 +38,7 @@ app.event('app_home_opened', async ({ event, client, context }) => {
             "type": "section",
             "text": {
               "type": "mrkdwn",
-              "text": "Rian Welcomes you :tada:"
+              "text": "Rian Welcomes you :tada:" + event.user
             }
           },
           {
@@ -71,7 +75,7 @@ app.command('/rian', async ({ ack, payload, context }) => {
           type: 'section',
           text: {
             type: 'mrkdwn',
-            text: 'Go ahead. Click it <@${payload.user}>!.'
+            text: 'Go ahead. Click it'
           },
           accessory: {
             type: 'button',
@@ -84,7 +88,7 @@ app.command('/rian', async ({ ack, payload, context }) => {
         }
       ],
       // Text in the notification
-      text: 'Message from Test App'
+      text: 'Message from Rian App'
     });
     console.log(result);
   }
