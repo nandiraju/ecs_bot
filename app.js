@@ -9,6 +9,12 @@ const app = new App({
 
 
 // All the room in the world for your code
+
+app.message('knock knock', async ({ message, say }) => {
+  await say(`_Who's there?_`);
+});
+
+
 app.event('app_home_opened', async ({ event, client, context }) => {
   try {
     /* view.publish is the method that your app uses to push a view to the Home tab */
@@ -65,7 +71,7 @@ app.command('/rian', async ({ ack, payload, context }) => {
           type: 'section',
           text: {
             type: 'mrkdwn',
-            text: 'Go ahead. Click it.'
+            text: 'Go ahead. Click it <@${payload.user}>!.'
           },
           accessory: {
             type: 'button',
@@ -86,6 +92,7 @@ app.command('/rian', async ({ ack, payload, context }) => {
     console.error(error);
   }
 });
+
 
 // Listen for a button invocation with action_id `button_abc`
 // You must set up a Request URL under Interactive Components on your app configuration page
