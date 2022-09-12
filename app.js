@@ -28,7 +28,7 @@ app.event('app_home_opened', async ({ event, client, context }) => {
             "type": "section",
             "text": {
               "type": "mrkdwn",
-              "text": "*Welcome to your _App's Home_* :tada:"
+              "text": "Rian Welcomes you :tada:"
             }
           },
           {
@@ -38,20 +38,8 @@ app.event('app_home_opened', async ({ event, client, context }) => {
             "type": "section",
             "text": {
               "type": "mrkdwn",
-              "text": "This button won't do much for now but you can set up a listener for it using the `actions()` method and passing its unique `action_id`. See an example in the `examples` folder within your Bolt app."
+              "text": "I can help you understand a lot of jargons that are used here at Experian. You can ask me any term and I will do my best to explain."
             }
-          },
-          {
-            "type": "actions",
-            "elements": [
-              {
-                "type": "button",
-                "text": {
-                  "type": "plain_text",
-                  "text": "Click me!"
-                }
-              }
-            ]
           }
         ]
       }
@@ -62,7 +50,7 @@ app.event('app_home_opened', async ({ event, client, context }) => {
   }
 });
 
-app.command('/helloworld', async ({ ack, payload, context }) => {
+app.command('/rian', async ({ ack, payload, context }) => {
   // Acknowledge the command request
   ack();
 
