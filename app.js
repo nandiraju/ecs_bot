@@ -20,19 +20,28 @@ app.message(/^(define?).*/, async ({ context, say }) => {
   console.log("DM In message.....");
   const greeting = context.matches[0];
   let asking = greeting.split(":")[1];
-  const searchIndex = terms.findIndex((oneTerm) =>
-    oneTerm.Acronym.toLowerCase().includes(asking.toLowerCase())
-  );
   
-  let foundItem = terms[searchIndex];
+  let foundItem = getTerm(asking);
   // RegExp matches are inside of context.matches
   await say(
     `Here are some explanations for ${asking} \n ` +
-      terms[searchIndex].Meaning +
+      foundItem.Meaning +
       "\n" +
-      terms[searchIndex].Notes
+      foundItem.Notes
   );
 });
+
+
+function getTerm(asking){
+  const searchIndex = terms.findIndex((oneTerm) =>
+    oneTerm.Acronym.toLowerCase().includes(asking.toLowerCase())
+  );
+
+  let foundItem = terms[searchIndex];
+  foundItem == null ? foundItem : { Meaning: "No term found", Notes: "" };
+  return foundItem;
+  
+}
 
 app.event("app_mention", async ({ event, context, client, say }) => {
   try {
@@ -92,20 +101,19 @@ app.event("app_home_opened", async ({ event, client, context }) => {
   }
 });
 
-app.command("/explain", async ({ ack, payload, context }) => {
-  // Acknowledge the command request
-  ack();
-  console.log(payload.text);
-  try {
-    const result = await app.client.chat.postMessage({
-      token: context.botToken,
-      // Channel to send message to
-      channel: payload.channel_id,
-      text: "Message from Rian App",
-    });
-  } catch (error) {
-    console.error(error);
-  }
+app.command('/explain', async ({ command, ack, say }) => {
+  // Acknowledge command request
+  await ack();
+let foundItem = getTerm(command.text);
+  
+  await say(
+    `Here are some explanations for ${asking} \n ` +
+      foundItem.Meaning +
+      "\n" +
+      foundItem.Notes
+  );
+  
+  //await respond(`${command.text}`);
 });
 
 (async () => {
