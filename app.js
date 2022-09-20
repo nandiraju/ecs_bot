@@ -15,7 +15,7 @@ const terms = {
 
 // All the room in the world for your code
 
-app.message(/^(define:).*/, async ({ context, say }) => {
+app.message(/^(define?).*/, async ({ context, say }) => {
   // RegExp matches are inside of context.matches
   const greeting = context.matches[0];
   let asking = greeting.split(":")[1];
