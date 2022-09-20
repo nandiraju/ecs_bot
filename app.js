@@ -41,19 +41,19 @@ app.event("app_mention", async ({ event, context, client, say }) => {
   }
 });
 
-// app.message(async ({ message, say }) => {
+app.message(async ({ message, say }) => {
 
-//   console.log("In message.....")
+  console.log("In message.....")
 
-// //    const reversedText = [...message.text].reverse().join("");
-// //     await say(reversedText);
-
-//   // Filter out message events with subtypes (see https://api.slack.com/events/message)
-//   if (message.subtype === undefined || message.subtype === 'bot_message') {
-//     const reversedText = [...message.text].reverse().join("");
+//    const reversedText = [...message.text].reverse().join("");
 //     await say(reversedText);
-//   }
-// });
+
+  // Filter out message events with subtypes (see https://api.slack.com/events/message)
+  if (message.subtype === undefined || message.subtype === 'bot_message') {
+    const reversedText = [...message.text].reverse().join("");
+    await say(reversedText);
+  }
+});
 
 // app.message('hello', async ({ message, say }) => {
 //   await say(`_Who's there?_`);
