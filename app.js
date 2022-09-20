@@ -37,15 +37,15 @@ async function answerResponse(inputText, say) {
 
   if (
     foundItem.Notes == null ||
-    foundItem.Notes == ''  ||
-    foundItem.Notes == undefined  ||
+    foundItem.Notes == "" ||
+    foundItem.Notes == undefined ||
     foundItem.Notes.trim().length < 0
   ) {
     foundItem.Notes = ".";
   }
-  
+
   console.log(foundItem);
-  
+
   // await say(
   //   `Here are some explanations for ${inputText} \n ` +
   //     foundItem.Meaning +
@@ -82,6 +82,9 @@ async function answerResponse(inputText, say) {
           type: "mrkdwn",
           text: foundItem.Notes,
         },
+      },
+      {
+        type: "divider",
       },
     ],
   });
