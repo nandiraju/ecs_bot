@@ -37,16 +37,36 @@ async function answerResponse(inputText, say) {
 
   await say(
     {
-	"blocks": [
-		{
-			"type": "section",
-			"text": {
-				"type": "mrkdwn",
-				"text": "This is a mrkdwn section block :ghost: *this is bold*, and ~this is crossed out~, and <https://google.com|this is a link>"
-			}
-		}
-	]
-}
+      blocks: [
+        {
+          type: "header",
+          text: {
+            type: "plain_text",
+            text: inputText == null ? "" : inputText,
+          },
+        },
+        {
+          type: "divider",
+        },
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: foundItem.Meaning == null ? "" : foundItem.Meaning,
+          },
+        },
+          {
+          type: "divider",
+        },
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: foundItem.Notes == null ? "" : foundItem.Notes,
+          },
+        }
+      ],
+    }
     // `Here are some explanations for ${inputText} \n ` +
     //   foundItem.Meaning +
     //   "\n" +
