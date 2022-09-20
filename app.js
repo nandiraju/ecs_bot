@@ -10,7 +10,7 @@ const terms = {
   EITS: "",
   CIS: "Customer Information Systems",
   ECS: "Experian Consumer Services",
-  GIC: "Global Innovation Center"
+  GIC: "Global Innovation Center",
 };
 
 // All the room in the world for your code
@@ -23,34 +23,23 @@ app.message(/^(define:).*/, async ({ context, say }) => {
   await say(`Here are some explanations for ${asking} \n ` + meaning);
 });
 
-
-app.event('app_mention', async ({ event, context, client, say }) => {
+app.event("app_mention", async ({ event, context, client, say }) => {
   try {
-    await say({"blocks": [
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": `Thanks for the mention <@${event.user}>! Here's a button`
-        },
-        "accessory": {
-          "type": "button",
-          "text": {
-            "type": "plain_text",
-            "text": "Button",
-            "emoji": true
+    await say({
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: `Thanks for the mention <@${event.user}>! Have a great day`,
           },
-          "value": "click_me_123",
-          "action_id": "first_button"
-        }
-      }
-    ]});
-  }
-  catch (error) {
+        },
+      ],
+    });
+  } catch (error) {
     console.error(error);
   }
 });
-
 
 // app.message(async ({ message, say }) => {
 
@@ -88,9 +77,10 @@ app.event("app_home_opened", async ({ event, client, context }) => {
             type: "section",
             text: {
               type: "mrkdwn",
-              text: "Rian Welcomes you :tada:" + event.user,
+              text: `Welcome <@${event.user}>! :tada: I can help you with Experian Jargons..`,
             },
           },
+
           {
             type: "divider",
           },
