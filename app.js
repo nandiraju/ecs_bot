@@ -15,13 +15,42 @@ const terms = {
 
 // All the room in the world for your code
 
-// app.message(/^(define:).*/, async ({ context, say }) => {
-//   // RegExp matches are inside of context.matches
-//   const greeting = context.matches[0];
-//   let asking = greeting.split(":")[1];
-//   let meaning = terms[asking];
-//   await say(`Here are some explanations for ${asking} \n ` + meaning);
-// });
+app.message(/^(define:).*/, async ({ context, say }) => {
+  // RegExp matches are inside of context.matches
+  const greeting = context.matches[0];
+  let asking = greeting.split(":")[1];
+  let meaning = terms[asking];
+  await say(`Here are some explanations for ${asking} \n ` + meaning);
+});
+
+
+app.event('app_mention', async ({ event, context, client, say }) => {
+  try {
+    await say({"blocks": [
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": `Thanks for the mention <@${event.user}>! Here's a button`
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Button",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "action_id": "first_button"
+        }
+      }
+    ]});
+  }
+  catch (error) {
+    console.error(error);
+  }
+});
+
 
 // app.message(async ({ message, say }) => {
 
@@ -37,9 +66,9 @@ const terms = {
 //   }
 // });
 
-app.message('hello', async ({ message, say }) => {
-  await say(`_Who's there?_`);
-});
+// app.message('hello', async ({ message, say }) => {
+//   await say(`_Who's there?_`);
+// });
 
 app.event("app_home_opened", async ({ event, client, context }) => {
   try {
