@@ -103,13 +103,58 @@ app.event("app_home_opened", async ({ event, client, context }) => {
   }
 });
 
-app.command('/explain', async ({ command, ack, respond }) => {
-  // Acknowledge command request
-  await ack();
-  const greeting = context.matches[0];
-  let asking = greeting.split(":")[1];
-  let meaning = terms[asking];
-  await respond(`${command.text}`);
+
+
+app.command("/explain", async ({ ack, payload, context }) => {
+  // Acknowledge the command request
+  ack();
+console.log(payload.text);
+  try {
+    const result = await app.client.chat.postMessage({
+      token: context.botToken,
+      // Channel to send message to
+      channel: payload.channel_id,
+      text: "Message from Rian App",
+    });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+app.command("/rian", async ({ ack, payload, context }) => {
+  // Acknowledge the command request
+  ack();
+
+  try {
+    const result = await app.client.chat.postMessage({
+      token: context.botToken,
+      // Channel to send message to
+      channel: payload.channel_id,
+      // Include a button in the message (or whatever blocks you want!)
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: "Ahh. Click it",
+          },
+          accessory: {
+            type: "button",
+            text: {
+              type: "plain_text",
+              text: "Click me!",
+            },
+            action_id: "button_abc",
+          },
+        },
+      ],
+      // Text in the notification
+      text: "Message from Rian App",
+    });
+    console.log(result);
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 (async () => {
