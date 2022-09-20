@@ -15,13 +15,13 @@ const terms = {
 
 // All the room in the world for your code
 
-app.message(/^(define:).*/, async ({ context, say }) => {
-  // RegExp matches are inside of context.matches
-  const greeting = context.matches[0];
-  let asking = greeting.split(":")[1];
-  let meaning = terms[asking];
-  await say(`Here are some explanations for ${asking} \n ` + meaning);
-});
+// app.message(/^(define:).*/, async ({ context, say }) => {
+//   // RegExp matches are inside of context.matches
+//   const greeting = context.matches[0];
+//   let asking = greeting.split(":")[1];
+//   let meaning = terms[asking];
+//   await say(`Here are some explanations for ${asking} \n ` + meaning);
+// });
 
 // app.message(async ({ message, say }) => {
 
@@ -37,9 +37,9 @@ app.message(/^(define:).*/, async ({ context, say }) => {
 //   }
 // });
 
-// app.message('knock knock', async ({ message, say }) => {
-//   await say(`_Who's there?_`);
-// });
+app.message('hello', async ({ message, say }) => {
+  await say(`_Who's there?_`);
+});
 
 app.event("app_home_opened", async ({ event, client, context }) => {
   try {
@@ -95,7 +95,7 @@ app.command("/rian", async ({ ack, payload, context }) => {
           type: "section",
           text: {
             type: "mrkdwn",
-            text: "Go ahead. Click it",
+            text: "Ahh. Click it",
           },
           accessory: {
             type: "button",
