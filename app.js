@@ -36,10 +36,21 @@ async function answerResponse(inputText, say) {
   let foundItem = getTerm(inputText);
 
   await say(
-    `Here are some explanations for ${inputText} \n ` +
-      foundItem.Meaning +
-      "\n" +
-      foundItem.Notes
+    {
+	"blocks": [
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "This is a mrkdwn section block :ghost: *this is bold*, and ~this is crossed out~, and <https://google.com|this is a link>"
+			}
+		}
+	]
+}
+    // `Here are some explanations for ${inputText} \n ` +
+    //   foundItem.Meaning +
+    //   "\n" +
+    //   foundItem.Notes
   );
 }
 
