@@ -44,7 +44,7 @@ async function answerResponse(inputText, say) {
     foundItem.Notes = ".";
   }
 
-  console.log(foundItem);
+  //console.log(foundItem);
 
   // await say(
   //   `Here are some explanations for ${inputText} \n ` +
@@ -52,6 +52,8 @@ async function answerResponse(inputText, say) {
   //     "\n" +
   //     foundItem.Notes
   // );
+  
+  let heading = inputText.toUpperCase() +" : " + (foundItem.Meaning == undefined ? "" : foundItem.Meaning);
 
   await say({
     blocks: [
@@ -59,20 +61,20 @@ async function answerResponse(inputText, say) {
         type: "header",
         text: {
           type: "plain_text",
-          text: inputText == undefined ? "" : inputText.toUpperCase(),
+          text: heading,
         },
       },
 
-      {
-        type: "section",
-        text: {
-          type: "mrkdwn",
-          text:
-            "*" +
-            (foundItem.Meaning == undefined ? "" : foundItem.Meaning) +
-            "*",
-        },
-      },
+      // {
+      //   type: "section",
+      //   text: {
+      //     type: "mrkdwn",
+      //     text:
+      //       "*" +
+      //       (foundItem.Meaning == undefined ? "" : foundItem.Meaning) +
+      //       "*",
+      //   },
+      // },
       {
         type: "divider",
       },
@@ -83,9 +85,9 @@ async function answerResponse(inputText, say) {
           text: foundItem.Notes,
         },
       },
-      {
-        type: "divider",
-      },
+      // {
+      //   type: "divider",
+      // },
     ],
   });
 }
