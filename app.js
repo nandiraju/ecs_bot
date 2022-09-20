@@ -35,43 +35,55 @@ function getTerm(asking) {
 async function answerResponse(inputText, say) {
   let foundItem = getTerm(inputText);
 
-  await say(
-    {
-      blocks: [
-        {
-          type: "header",
-          text: {
-            type: "plain_text",
-            text: inputText == null ? "" : inputText,
-          },
+  if (
+    foundItem.Notes == null ||
+    foundItem.Notes == undefined ||
+    foundItem.Notes.trim().length < 0
+  ) {
+    foundItem.Notes = "NA";
+  }
+  
+  console.log(foundItem);
+  
+  // await say(
+  //   `Here are some explanations for ${inputText} \n ` +
+  //     foundItem.Meaning +
+  //     "\n" +
+  //     foundItem.Notes
+  // );
+
+  await say({
+    blocks: [
+      {
+        type: "header",
+        text: {
+          type: "plain_text",
+          text: inputText == undefined ? "" : inputText,
         },
-        {
-          type: "divider",
+      },
+
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text:
+            "*" +
+            (foundItem.Meaning == undefined ? "" : foundItem.Meaning) +
+            "*",
         },
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text: foundItem.Meaning == null ? "" : foundItem.Meaning,
-          },
+      },
+      {
+        type: "divider",
+      },
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: foundItem.Notes,
         },
-          {
-          type: "divider",
-        },
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text: foundItem.Notes == null ? "" : foundItem.Notes,
-          },
-        }
-      ],
-    }
-    // `Here are some explanations for ${inputText} \n ` +
-    //   foundItem.Meaning +
-    //   "\n" +
-    //   foundItem.Notes
-  );
+      },
+    ],
+  });
 }
 
 app.event("app_mention", async ({ event, context, client, say }) => {
