@@ -18,16 +18,20 @@ const app = new App({
 
 app.message(/^(define?).*/, async ({ context, say }) => {
   console.log("DM In message.....");
-
-  const searchIndex = terms.findIndex((oneTerm) => oneTerm.model=="Acronym");
-
-  
-  
-  // RegExp matches are inside of context.matches
   const greeting = context.matches[0];
   let asking = greeting.split(":")[1];
-  let meaning = terms[asking];
-  await say(`Here are some explanations for ${asking} \n ` + meaning);
+  const searchIndex = terms.findIndex((oneTerm) =>
+    oneTerm.Acronym.toLowerCase().includes(asking.toLowerCase())
+  );
+  
+  let foundItem = terms[searchIndex];
+  // RegExp matches are inside of context.matches
+  await say(
+    `Here are some explanations for ${asking} \n ` +
+      terms[searchIndex].Meaning +
+      "\n" +
+      terms[searchIndex].Notes
+  );
 });
 
 app.event("app_mention", async ({ event, context, client, say }) => {
