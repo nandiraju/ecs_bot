@@ -16,6 +16,10 @@ const terms = {
 // All the room in the world for your code
 
 app.message(/^(define?).*/, async ({ context, say }) => {
+  
+    console.log("DM In message.....")
+
+  
   // RegExp matches are inside of context.matches
   const greeting = context.matches[0];
   let asking = greeting.split(":")[1];
@@ -99,40 +103,13 @@ app.event("app_home_opened", async ({ event, client, context }) => {
   }
 });
 
-app.command("/rian", async ({ ack, payload, context }) => {
-  // Acknowledge the command request
-  ack();
-
-  try {
-    const result = await app.client.chat.postMessage({
-      token: context.botToken,
-      // Channel to send message to
-      channel: payload.channel_id,
-      // Include a button in the message (or whatever blocks you want!)
-      blocks: [
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text: "Ahh. Click it",
-          },
-          accessory: {
-            type: "button",
-            text: {
-              type: "plain_text",
-              text: "Click me!",
-            },
-            action_id: "button_abc",
-          },
-        },
-      ],
-      // Text in the notification
-      text: "Message from Rian App",
-    });
-    console.log(result);
-  } catch (error) {
-    console.error(error);
-  }
+app.command('/explain', async ({ command, ack, respond }) => {
+  // Acknowledge command request
+  await ack();
+  const greeting = context.matches[0];
+  let asking = greeting.split(":")[1];
+  let meaning = terms[asking];
+  await respond(`${command.text}`);
 });
 
 (async () => {
