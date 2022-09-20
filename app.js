@@ -17,22 +17,12 @@ const app = new App({
 // All the room in the world for your code
 
 app.message(/^(define?).*/, async ({ context, say }) => {
-  console.log("DM In message.....");
   const greeting = context.matches[0];
   let asking = greeting.split(":")[1];
-  
-  let foundItem = getTerm(asking);
-  // RegExp matches are inside of context.matches
-  await say(
-    `Here are some explanations for ${asking} \n ` +
-      foundItem.Meaning +
-      "\n" +
-      foundItem.Notes
-  );
+  answerResponse(asking, say);
 });
 
-
-function getTerm(asking){
+function getTerm(asking) {
   const searchIndex = terms.findIndex((oneTerm) =>
     oneTerm.Acronym.toLowerCase().includes(asking.toLowerCase())
   );
@@ -40,7 +30,17 @@ function getTerm(asking){
   let foundItem = terms[searchIndex];
   foundItem == null ? foundItem : { Meaning: "No term found", Notes: "" };
   return foundItem;
-  
+}
+
+async function answerResponse(inputText, say) {
+  let foundItem = getTerm(inputText);
+
+  await say(
+    `Here are some explanations for ${inputText} \n ` +
+      foundItem.Meaning +
+      "\n" +
+      foundItem.Notes
+  );
 }
 
 app.event("app_mention", async ({ event, context, client, say }) => {
@@ -101,19 +101,10 @@ app.event("app_home_opened", async ({ event, client, context }) => {
   }
 });
 
-app.command('/explain', async ({ command, ack, say }) => {
+app.command("/explain", async ({ command, ack, say }) => {
   // Acknowledge command request
   await ack();
-let foundItem = getTerm(command.text);
-  
-  await say(
-    `Here are some explanations for ${asking} \n ` +
-      foundItem.Meaning +
-      "\n" +
-      foundItem.Notes
-  );
-  
-  //await respond(`${command.text}`);
+  answerResponse(command.text, say);
 });
 
 (async () => {
