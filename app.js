@@ -37,10 +37,11 @@ async function answerResponse(inputText, say) {
 
   if (
     foundItem.Notes == null ||
-    foundItem.Notes == undefined ||
+    foundItem.Notes == ''  ||
+    foundItem.Notes == undefined  ||
     foundItem.Notes.trim().length < 0
   ) {
-    foundItem.Notes = "NA";
+    foundItem.Notes = ".";
   }
   
   console.log(foundItem);
@@ -58,7 +59,7 @@ async function answerResponse(inputText, say) {
         type: "header",
         text: {
           type: "plain_text",
-          text: inputText == undefined ? "" : inputText,
+          text: inputText == undefined ? "" : inputText.toUpperCase(),
         },
       },
 
