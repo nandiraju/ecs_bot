@@ -131,7 +131,7 @@ app.event("app_home_opened", async ({ event, client, context }) => {
             type: "section",
             text: {
               type: "mrkdwn",
-              text: `Welcome <@${event.user}>! :tada: I can help you with Experian Jargons.`,
+              text: `Welcome <@${event.user}>! :tada: I assist you with Experian Jargons.`,
             },
           },
 
